@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>官網 + LINE 官方帳號　資料填寫表 · 3Q 孵化所</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<style>
+/* ===== 3Q 孵化所 Design System tokens (extracted) ===== */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap');
+:root{
+  color-scheme:light;
+  --ink-900:#1f2430; --slate-800:#2e3440; --gray-700:#444; --gray-600:#6b7280; --line:#d8dce2;
+  --surface-page:#f4f5f7; --surface-card:#fff; --surface-subtle:#fafafa;
+  --gold-fill:#fff3cd; --gold-line:#e6c200; --gold-text:#8a6d00; --gold-warn:#fff8e6;
+  --must-fill:#fde8e8; --must-text:#a8201a; --plus-fill:#eef0f3; --plus-text:#556666;
+  --success-fill:#f3f8f3; --success-line:#4a8a4a; --success-text:#2f6b2f;
+  --font-sans:"Noto Sans TC","Microsoft JhengHei","微軟正黑體","PingFang TC","Heiti TC",sans-serif;
+  --sheet-max:840px; --shadow-sheet:0 2px 18px rgba(0,0,0,.08);
+}
+*{ box-sizing:border-box; }
+body{ font-family:var(--font-sans); color:var(--ink-900); margin:0; background:var(--surface-page); line-height:1.55; }
+.bar{ position:sticky; top:0; z-index:5; background:var(--ink-900); color:#fff; font-size:13px; text-align:center; padding:9px 12px; }
+.sheet{ max-width:var(--sheet-max); margin:24px auto 120px; background:var(--surface-card); padding:46px 52px; box-shadow:var(--shadow-sheet); border-radius:0; }
+h1{ font-size:22px; margin:0 0 4px; }
+.meta{ color:var(--gray-600); font-size:13px; margin:0 0 16px; }
+.meta input{ min-width:160px; }
+.lead{ font-size:14px; margin:0 0 14px; padding:14px 16px; background:var(--surface-subtle); border-left:3px solid var(--slate-800); }
+.legend{ font-size:12.5px; margin:0 0 22px; color:var(--gray-700); }
+.pill{ display:inline-block; font-size:11px; font-weight:700; border-radius:10px; padding:1px 9px; margin-right:4px; }
+.must{ background:var(--must-fill); color:var(--must-text); } .plus{ background:var(--plus-fill); color:var(--plus-text); }
+.we{ background:var(--gold-fill); color:var(--gold-text); border:1px solid var(--gold-line); }
+h2{ font-size:15px; margin:26px 0 10px; padding-bottom:6px; border-bottom:2px solid var(--slate-800); }
+.row{ padding:11px 0; border-bottom:1px solid var(--line); }
+.row:last-child{ border-bottom:0; }
+.q{ font-size:13px; font-weight:600; margin-bottom:5px; }
+.q .tag{ float:right; font-weight:400; }
+.hint{ font-size:12px; color:var(--gray-600); font-weight:400; margin-top:2px; }
+input[type=text], input[type=email], input[type=tel], textarea{
+  width:100%; font-family:inherit; font-size:13px; color:var(--ink-900);
+  border:1px solid var(--line); border-radius:2px; padding:8px 10px; background:#fff; }
+input:focus, textarea:focus{ outline:none; border-color:var(--gold-line); box-shadow:0 0 0 2px var(--gold-fill); }
+textarea{ resize:vertical; min-height:58px; }
+.opts{ font-size:13px; display:flex; flex-wrap:wrap; gap:6px 16px; margin-top:4px; }
+.opts label{ display:inline-flex; align-items:center; gap:5px; cursor:pointer; }
+.note{ font-size:12.5px; color:var(--gray-700); }
+.warn{ background:var(--gold-warn); border:1px solid var(--gold-line); border-radius:5px; padding:9px 13px; font-size:12.5px; margin-top:10px; }
+.success{ font-size:14px; margin:24px 0 6px; padding:14px 16px; background:var(--success-fill); border-left:3px solid var(--success-line); }
+.send{ font-size:12.5px; color:var(--gray-700); margin-top:6px; }
+.foot{ margin-top:26px; text-align:center; color:var(--gray-600); font-size:12px; border-top:1px solid var(--line); padding-top:12px; }
+/* action bar */
+.actions{ position:fixed; left:0; right:0; bottom:0; z-index:6; background:#fff; border-top:1px solid var(--line);
+  box-shadow:0 -2px 14px rgba(0,0,0,.06); padding:10px 16px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
+.btn{ font-family:inherit; font-size:13px; font-weight:700; border-radius:4px; padding:9px 18px; cursor:pointer; border:1px solid var(--slate-800); }
+.btn.primary{ background:var(--slate-800); color:#fff; } .btn.ghost{ background:#fff; color:var(--slate-800); }
+.btn.gold{ background:var(--gold-fill); color:var(--gold-text); border-color:var(--gold-line); }
+.saved{ font-size:12px; color:var(--gray-600); align-self:center; }
+/* summary modal */
+.modal{ display:none; position:fixed; inset:0; z-index:9; background:rgba(31,36,48,.55); padding:20px; overflow:auto; }
+.modal.open{ display:block; }
+.modal .box{ max-width:680px; margin:30px auto; background:#fff; padding:28px 30px; border-radius:5px; }
+.modal h3{ margin:0 0 10px; font-size:17px; }
+.modal pre{ white-space:pre-wrap; font-family:inherit; font-size:13px; background:var(--surface-subtle);
+  border:1px solid var(--line); border-radius:4px; padding:14px; max-height:50vh; overflow:auto; }
+@media(max-width:680px){ .sheet{ padding:30px 18px; margin:14px 8px 130px; } .q .tag{ float:none; display:block; margin-top:3px; } }
+@media print{
+  body{ background:#fff; } .bar,.actions,.modal{ display:none!important; }
+  .sheet{ box-shadow:none; margin:0; max-width:none; }
+  h2{ page-break-after:avoid; } .row{ page-break-inside:avoid; }
+  input,textarea{ border:0; border-bottom:1px solid var(--line); border-radius:0; }
+  @page{ size:A4; margin:14mm; }
+}
+</style>
+</head>
+<body>
+<div class="bar">直接在欄位填寫，手機也能填。標 ◇ 可委託我方 的你不用自己弄。填完按下方「產生摘要 → 複製傳給 3Q」</div>
+
+<form class="sheet" id="f">
+  <h1>官網 + LINE 官方帳號　資料填寫表</h1>
+  <p class="meta">填寫人：<input type="text" data-label="填寫人" placeholder="你的稱呼 / 品牌"> ·　整理：3Q 孵化所</p>
+
+  <p class="lead">為了把你的品牌做到最好，我把需要的東西整理成這張表。<br>
+  你照著填就好——手邊沒有、或不確定的，標 <span class="pill we">◇ 可委託我方</span> 的我直接接手，不用你自己扛。我們一起把它弄齊。</p>
+
+  <p class="legend"><span class="pill must">● 必備</span> 沒有會卡進度　<span class="pill plus">◐ 加分</span> 有更好、之後補也行　<span class="pill we">◇ 可委託我方</span> 你沒有我幫你做</p>
+
+  <h2>A. 品牌識別</h2>
+  <div class="row"><div class="q">品牌名稱（中文）<span class="tag"><span class="pill must">●</span></span></div><input type="text" data-label="品牌名稱(中)"></div>
+  <div class="row"><div class="q">品牌名稱（英 / 拼音）<span class="hint">網域、頁尾會用到</span></div><input type="text" data-label="品牌名稱(英)"></div>
+  <div class="row"><div class="q">LOGO<span class="tag"><span class="pill must">●</span><span class="pill we">◇</span></span></div>
+    <div class="opts" data-label="LOGO"><label><input type="radio" name="logo" value="有，另傳LINE">有，等下傳 LINE 給你</label><label><input type="radio" name="logo" value="沒有，請3Q設計">沒有，◇ 請 3Q 設計</label></div></div>
+  <div class="row"><div class="q">品牌主色 / 輔色<span class="tag"><span class="pill plus">◐</span><span class="pill we">◇</span></span><span class="hint">色碼 HEX，例 #1A1A1A；沒有就由我方提案</span></div><input type="text" data-label="品牌色" placeholder="#______ / #______ 或「請 3Q 提案」"></div>
+  <div class="row"><div class="q">標語 / 一句話定位<span class="tag"><span class="pill plus">◐</span><span class="pill we">◇</span></span><span class="hint">例「你家的第二個冰箱」</span></div><input type="text" data-label="標語"></div>
+
+  <h2>B. 聯絡與營業資訊</h2>
+  <div class="row"><div class="q">店名 / 公司名、營業時間<span class="tag"><span class="pill must">●</span></span></div><input type="text" data-label="店名與營業時間"></div>
+  <div class="row"><div class="q">電話<span class="tag"><span class="pill must">●</span></span></div><input type="tel" data-label="電話"></div>
+  <div class="row"><div class="q">Email<span class="tag"><span class="pill must">●</span></span></div><input type="email" data-label="Email"></div>
+  <div class="row"><div class="q">地址 + 地圖連結<span class="tag"><span class="pill must">●</span></span><span class="hint">Google Maps 導航連結，手機點了直接帶路</span></div><input type="text" data-label="地址"></div>
+  <div class="row"><div class="q">現有社群 / 通路連結<span class="tag"><span class="pill must">●</span></span><span class="hint">IG / FB / TikTok / 蝦皮 / 既有官網</span></div><textarea data-label="社群連結"></textarea></div>
+  <div class="row"><div class="q">統一編號<span class="tag"><span class="pill plus">◐</span></span><span class="hint">若頁尾要顯示或要開發票</span></div><input type="text" data-label="統一編號"></div>
+
+  <h2>C. 網站內容</h2>
+  <div class="row"><div class="q">想要的頁面<span class="tag"><span class="pill must">●</span></span></div>
+    <div class="opts" data-label="想要的頁面"><label><input type="checkbox" value="首頁">首頁</label><label><input type="checkbox" value="關於">關於</label><label><input type="checkbox" value="產品/服務">產品/服務</label><label><input type="checkbox" value="相簿">相簿</label><label><input type="checkbox" value="最新消息">最新消息</label><label><input type="checkbox" value="聯絡">聯絡</label><label><input type="checkbox" value="預約">預約</label><label><input type="checkbox" value="其他">其他</label></div></div>
+  <div class="row"><div class="q">品牌故事 / 關於我們<span class="tag"><span class="pill must">●</span><span class="pill we">◇</span></span><span class="hint">一段文字即可；不會寫就勾「請 3Q 代筆」</span></div><textarea data-label="品牌故事" placeholder="寫幾句即可，或留白勾下面"></textarea>
+    <div class="opts" data-label="故事代筆"><label><input type="checkbox" value="請3Q代筆">◇ 請 3Q 代筆（聊 10 分鐘幫你抓重點）</label></div></div>
+  <div class="row"><div class="q">產品 / 服務清單<span class="tag"><span class="pill must">●</span></span><span class="hint">每項：名稱 + 說明 + 價格 + 規格/分類</span></div><textarea data-label="產品服務清單" placeholder="例：&#10;・除塵蟎服務 / 到府深層清潔 / 一次 NT$___&#10;・收納整理 / 半天 / NT$___"></textarea></div>
+  <div class="row"><div class="q">產品 / 服務照片<span class="tag"><span class="pill must">●</span><span class="pill we">◇</span></span><span class="hint">≥1500px、橫式優先、原圖別壓縮；可協助修圖</span></div><input type="text" data-label="照片狀態" placeholder="有幾組 / 何時傳 / 或請 3Q 協助拍攝"></div>
+  <div class="row"><div class="q">主視覺參考<span class="tag"><span class="pill plus">◐</span><span class="pill we">◇</span></span><span class="hint">丟我 2–3 個你喜歡的網站，或描述想要的感覺</span></div><textarea data-label="主視覺參考"></textarea></div>
+  <div class="row"><div class="q">FAQ / 服務說明<span class="tag"><span class="pill plus">◐</span></span></div><textarea data-label="FAQ"></textarea></div>
+
+  <h2>D. 網域</h2>
+  <div class="row"><div class="q">想要的網域名稱<span class="tag"><span class="pill must">●</span></span><span class="hint">英文 / 拼音，給 2–3 個備案（怕首選被別人註冊）</span></div><input type="text" data-label="想要的網域"></div>
+  <div class="row"><div class="q">已有網域？<span class="tag"><span class="pill plus">◐</span></span></div><input type="text" data-label="已有網域" placeholder="有的話填網址，我幫你接；沒有免填"></div>
+  <div class="row"><div class="q">要網域企業信箱嗎？<span class="tag"><span class="pill plus">◐</span></span></div>
+    <div class="opts" data-label="企業信箱"><label><input type="radio" name="mail" value="要">要 name@品牌.com</label><label><input type="radio" name="mail" value="不用">不用</label></div></div>
+
+  <h2>E. LINE 官方帳號</h2>
+  <div class="row"><div class="q">LINE OA 現況<span class="tag"><span class="pill must">●</span></span><span class="hint">已建立嗎？帳號 ID？或一起申請</span></div><input type="text" data-label="LINE OA現況"></div>
+  <div class="row"><div class="q">Messaging API 權限<span class="tag"><span class="pill must">●</span><span class="pill we">◇</span></span></div>
+    <div class="opts" data-label="Messaging API"><label><input type="radio" name="api" value="已有">已有</label><label><input type="radio" name="api" value="請3Q帶開">◇ 請 3Q 帶我開</label></div></div>
+  <div class="row"><div class="q">圖文選單功能<span class="tag"><span class="pill must">●</span><span class="pill we">◇</span></span><span class="hint">想要哪些格子，選單圖我方設計</span></div>
+    <div class="opts" data-label="圖文選單"><label><input type="checkbox" value="官網">官網</label><label><input type="checkbox" value="優惠券">優惠券</label><label><input type="checkbox" value="預約">預約</label><label><input type="checkbox" value="打電話">打電話</label><label><input type="checkbox" value="地圖">地圖</label><label><input type="checkbox" value="最新消息">最新消息</label><label><input type="checkbox" value="蝦皮">蝦皮</label></div></div>
+  <div class="row"><div class="q">加好友歡迎訊息<span class="tag"><span class="pill must">●</span><span class="pill we">◇</span></span><span class="hint">客人加你第一句看到的話；可代筆</span></div><textarea data-label="歡迎訊息"></textarea></div>
+  <div class="row"><div class="q">關鍵字自動回應<span class="tag"><span class="pill plus">◐</span></span><span class="hint">例「營業時間」→ 回時間</span></div><textarea data-label="自動回應"></textarea></div>
+  <div class="row"><div class="q">進階：會員 / 預約 / 表單<span class="tag"><span class="pill plus">◐</span></span></div>
+    <div class="opts" data-label="進階LIFF"><label><input type="checkbox" value="會員">會員卡</label><label><input type="checkbox" value="預約">線上預約</label><label><input type="checkbox" value="表單">表單</label><label><input type="checkbox" value="暫不需要">暫不需要</label></div></div>
+  <div class="row"><div class="q">認證帳號（綠盾）<span class="tag"><span class="pill plus">◐</span></span></div>
+    <div class="opts" data-label="認證帳號"><label><input type="radio" name="verify" value="要">要申請</label><label><input type="radio" name="verify" value="不用">不用</label></div></div>
+
+  <h2>F. 素材規格（提供前先看一下）</h2>
+  <div class="note">· 照片：JPG / PNG，≥ 1500px，橫式優先，原圖別壓縮。<br>· LOGO：向量最佳，PNG 去背次之。<br>· 影片（如有）：MP4 原檔。<br>· <span class="pill we">◇</span> 沒有專業素材？我方可安排拍攝 / 設計 / AI 生成。</div>
+  <div class="warn">⚠ 版權確認：提供的圖文請確認是你有權使用的；網路上抓的圖先跟我說，我幫你換成可商用的，避免之後被找麻煩。</div>
+
+  <h2>G. 帳號與權限（只有要接手 / 搬遷才填）</h2>
+  <div class="row"><div class="q">既有網站 / 主機<span class="tag"><span class="pill plus">◐</span></span></div><input type="text" data-label="既有網站"></div>
+  <div class="row"><div class="q">既有電商 / 預約系統<span class="tag"><span class="pill plus">◐</span></span></div><input type="text" data-label="既有系統"></div>
+  <div class="note">※ 帳號密碼別寫在這張表，等我們確認後另外用安全方式給。</div>
+
+  <h2>H. 上線後</h2>
+  <div class="row"><div class="q">日後誰更新內容<span class="tag"><span class="pill must">●</span></span></div>
+    <div class="opts" data-label="日後更新"><label><input type="radio" name="upd" value="自己更新">我自己更新</label><label><input type="radio" name="upd" value="委託3Q代管">◇ 委託 3Q 代管</label></div></div>
+  <div class="row"><div class="q">需要操作教學嗎<span class="tag"><span class="pill plus">◐</span></span></div>
+    <div class="opts" data-label="操作教學"><label><input type="radio" name="teach" value="要">要</label><label><input type="radio" name="teach" value="不用">不用</label></div></div>
+  <div class="row"><div class="q">後續維護意向<span class="tag"><span class="pill plus">◐</span></span></div>
+    <div class="opts" data-label="後續維護"><label><input type="radio" name="maint" value="基礎">基礎維護</label><label><input type="radio" name="maint" value="標準">標準成長</label><label><input type="radio" name="maint" value="全包">全包成長</label><label><input type="radio" name="maint" value="再說">用順手再說</label></div></div>
+
+  <p class="success">準備到哪都可以先傳給我，不用等全部齊。<br>缺的、不會用的，標 ◇ 的我接手。我們一步一步把你的品牌門面，立到你會想拿出去炫的程度。</p>
+  <p class="send"><b>交件方式：</b>照片 / LOGO 丟 LINE 相簿或雲端連結都行，檔名隨意，我幫你整理歸檔。</p>
+  <div class="foot">3Q 孵化所　·　把每個細節都替你想好</div>
+</form>
+
+<div class="actions">
+  <span class="saved" id="saved">填寫內容會自動暫存在這台裝置</span>
+  <button type="button" class="btn primary" id="gen">產生摘要 → 複製傳給 3Q</button>
+  <button type="button" class="btn gold" id="print">列印 / 存 PDF</button>
+  <button type="button" class="btn ghost" id="clear">清除重填</button>
+</div>
+
+<div class="modal" id="modal">
+  <div class="box">
+    <h3>填寫摘要</h3>
+    <p class="note">按「複製」後，貼到 LINE 傳給 3Q 就完成了。</p>
+    <pre id="out"></pre>
+    <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
+      <button type="button" class="btn primary" id="copy">複製摘要</button>
+      <button type="button" class="btn ghost" id="close">關閉</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var KEY='3q_client_form_v1', f=document.getElementById('f');
+  function fields(){ return f.querySelectorAll('input,textarea'); }
+  // ---- autosave (degrades gracefully if storage blocked) ----
+  function save(){ try{ var d={}; fields().forEach(function(el){
+      var k=el.name||el.dataset.label||el.id; if(!k) return;
+      if(el.type==='checkbox'||el.type==='radio'){ if(el.checked) (d[k]=d[k]||[]).push(el.value); }
+      else if(el.value) d[k]=el.value; });
+    localStorage.setItem(KEY, JSON.stringify(d)); }catch(e){} }
+  function restore(){ try{ var d=JSON.parse(localStorage.getItem(KEY)||'{}');
+    fields().forEach(function(el){ var k=el.name||el.dataset.label||el.id; if(!(k in d)) return;
+      if(el.type==='checkbox'||el.type==='radio'){ if((d[k]||[]).indexOf(el.value)>-1) el.checked=true; }
+      else el.value=d[k]; }); }catch(e){} }
+  f.addEventListener('input', save); f.addEventListener('change', save); restore();
+  // ---- build summary ----
+  function summary(){
+    var lines=['【官網 + LINE 官方帳號 · 客戶資料】',''];
+    f.querySelectorAll('[data-label]').forEach(function(grp){
+      var label=grp.dataset.label, val='';
+      if(grp.matches('input,textarea')){ val=grp.value.trim(); }
+      else { var picked=[]; grp.querySelectorAll('input:checked').forEach(function(c){picked.push(c.value);}); val=picked.join('、'); }
+      if(val) lines.push('● '+label+'：'+val);
+    });
+    lines.push(''); lines.push('— 由 3Q 資料填寫表產生');
+    return lines.join('\n');
+  }
+  var modal=document.getElementById('modal'), out=document.getElementById('out');
+  document.getElementById('gen').onclick=function(){ out.textContent=summary(); modal.classList.add('open'); };
+  document.getElementById('close').onclick=function(){ modal.classList.remove('open'); };
+  document.getElementById('copy').onclick=function(){
+    var t=out.textContent;
+    function done(){ this&&0; var b=document.getElementById('copy'); b.textContent='已複製 ✓'; setTimeout(function(){b.textContent='複製摘要';},1600); }
+    if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(t).then(done,function(){fallback(t);done();}); }
+    else { fallback(t); done(); }
+    function fallback(x){ var ta=document.createElement('textarea'); ta.value=x; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy');}catch(e){} ta.remove(); }
+  };
+  document.getElementById('print').onclick=function(){ window.print(); };
+  document.getElementById('clear').onclick=function(){ if(confirm('確定清除已填內容？')){ try{localStorage.removeItem(KEY);}catch(e){} f.reset(); } };
+})();
+</script>
+</body>
+</html>
